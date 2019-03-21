@@ -1,0 +1,37 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8 profile">
+          <h3 class="page-header"><%= @user.name %></h3>
+            <div class="row">
+              <div class="col-md-4">
+                <%= image_tag(@user.avatar.url(:medium), alt: @user.name, class: "img-thumbnail") %><br>
+                <% if @user.id != current_user.id %>
+                  <p>
+                    <% if current_user.following.exists?(:follower_id => @user.id) %>
+                      <%= link_to unfollow_path(current_user.following.where(:follower_id => @user.id).ids), class: "btn btn-danger btn-block" do %>
+                        <i class="fa fa-users"></i>
+                         <span>Unfollow</span>
+                      <% end %>
+                    <% else %>
+                      <%= link_to follow_path(@user.id), class: "btn btn-primary btn-block" do %>
+                        <i class="fa fa-users"></i>
+                         <span>Follow</span>
+                      <% end %>
+                    <% end %>
+                  </p>
+                <% end %>
+              </div>
+              <div class="col-md-8">
+                <ul>
+                  <li><strong>Email: </strong><%= @user.email %></li>
+                  <li><strong>About</strong></li>
+                  <li><%= @user.about %></li>
+                </ul>
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</section>
